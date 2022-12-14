@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace App
 {
-    public partial class formUserInterface : Form
+    public partial class formGDNprint : Form
     {
-        public formUserInterface()
+        public formGDNprint()
         {
             InitializeComponent();
         }

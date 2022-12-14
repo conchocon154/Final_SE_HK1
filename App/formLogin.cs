@@ -68,7 +68,7 @@ namespace App
                             this.Hide();
                         } else
                         {
-                            var frm = new formUserInterface();
+                            var frm = new formUserInterface(username);
                             frm.Location = this.Location;
                             frm.StartPosition = FormStartPosition.Manual;
                             frm.FormClosing += delegate { this.Show(); };

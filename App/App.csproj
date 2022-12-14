@@ -72,11 +72,23 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>CosmesticDBDataSet.xsd</DependentUpon>
     </Compile>
+    <Compile Include="formGDNprint.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="formGDNprint.Designer.cs">
+      <DependentUpon>formGDNprint.cs</DependentUpon>
+    </Compile>
     <Compile Include="formLogin.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="formLogin.Designer.cs">
       <DependentUpon>formLogin.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserInterface.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UserInterface.Designer.cs">
+      <DependentUpon>UserInterface.cs</DependentUpon>
     </Compile>
     <Compile Include="AdminInterface.cs">
       <SubType>Form</SubType>
@@ -84,16 +96,13 @@
     <Compile Include="AdminInterface.Designer.cs">
       <DependentUpon>AdminInterface.cs</DependentUpon>
     </Compile>
-    <Compile Include="formUserInterface.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="formUserInterface.Designer.cs">
-      <DependentUpon>formUserInterface.cs</DependentUpon>
-    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="formLogin.resx">
       <DependentUpon>formLogin.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserInterface.resx">
+      <DependentUpon>UserInterface.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="AdminInterface.resx">
       <DependentUpon>AdminInterface.cs</DependentUpon>

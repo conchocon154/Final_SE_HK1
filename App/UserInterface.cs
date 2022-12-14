@@ -65,12 +65,6 @@ namespace App
             this.Hide();
         }
 
-        private void btnExit_Click(object sender, EventArgs e)
-        {
-            Process.GetCurrentProcess().Kill();
-            Application.Exit();
-        }
-
 
         // CHANGE PASSWORD TAB
         private void btnReset_Click(object sender, EventArgs e)
@@ -564,6 +558,11 @@ namespace App
             
 
             connection.Close();
+        }
+
+        private void materialTabSelector1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -2,7 +2,9 @@
 2. Open solution file in App folder
 3. Start build and run project
 
-Warning: Install SAP Crystal Report runtime 32bit and 64bit before build and run, otherwise you can't build or print function not working
+Warning: 
+- Install SAP Crystal Report runtime 32bit and 64bit before build and run, otherwise you can't build or print function not working
+- Set region on windows to US
 
 Folder: App - Source code C#
 File: database.sql - SQL Script

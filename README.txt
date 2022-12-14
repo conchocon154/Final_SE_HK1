@@ -4,11 +4,11 @@
 
 Warning: Install SAP Crystal Report runtime 32bit and 64bit before build and run, otherwise you can't build or print function not working
 
-Folder: App - Source code C#<br>
-File: database.sql - SQL Script<br>
-File: 520K0108_520K0342.docx - Report<br>
+Folder: App - Source code C#
+File: database.sql - SQL Script
+File: 520K0108_520K0342.docx - Report
 
 Member:
 
-520K0108 - Lê Minh Đăng<br>
+520K0108 - Lê Minh Đăng
 520K0342 - Cao Khánh Tân

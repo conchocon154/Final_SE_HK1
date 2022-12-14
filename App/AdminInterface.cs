@@ -35,9 +35,9 @@ namespace App
 
             // Configure color schema
             materialSkinManager.ColorScheme = new MaterialSkin.ColorScheme(
-                Primary.Blue700, Primary.Blue800,
-                Primary.Blue500, Accent.Blue700,
-                TextShade.WHITE
+                Primary.Grey50, Primary.Grey50,
+                Primary.Grey50, Accent.Blue100,
+                TextShade.BLACK
             );
         }
 

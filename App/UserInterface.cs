@@ -34,24 +34,16 @@ namespace App
             materialSkinManager.EnforceBackcolorOnAllComponents = true;
             materialSkinManager.AddFormToManage(this);
             materialSkinManager.Theme = MaterialSkinManager.Themes.LIGHT;
-            //this.dataGRNProd.DefaultCellStyle.ForeColor = Color.Black;
-            //this.dataGRNrv.DefaultCellStyle.ForeColor = Color.Black;
-            //this.dataGDNrv.DefaultCellStyle.ForeColor = Color.Black;
 
             // Configure color schema
             materialSkinManager.ColorScheme = new MaterialSkin.ColorScheme(
-                Primary.Blue700, Primary.Blue800,
-                Primary.Blue500, Accent.Blue200,
-                TextShade.WHITE
+                Primary.Grey50, Primary.Grey50,
+                Primary.Grey50, Accent.Blue100,
+                TextShade.BLACK
             );
             DrawerBackgroundWithAccent = true;
 
             dateMonthSelect.CustomFormat = "yyyy-MM";
-            //dateListStart.CustomFormat = "yyyy-MM-dd";
-            //dateListEnd.CustomFormat = "yyyy-MM-dd";
-
-
-
 
         }
 
@@ -441,7 +433,7 @@ namespace App
         {
             String inoid = comboOrderGDN.SelectedValue.ToString();
 
-            using(formGDNprint frm = new formGDNprint())
+            using(formGDNprint frm = new formGDNprint(inoid))
             {
                 frm.ShowDialog();
             }

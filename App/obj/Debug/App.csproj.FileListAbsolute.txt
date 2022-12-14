@@ -63,3 +63,5 @@ D:\Workspace\TDTU\Repo_SE\App\bin\Debug\CrystalDecisions.ReportAppServer.ObjectF
 D:\Workspace\TDTU\Repo_SE\App\bin\Debug\CrystalDecisions.ReportAppServer.CommonControls.dll
 D:\Workspace\TDTU\Repo_SE\App\bin\Debug\stdole.dll
 D:\Workspace\TDTU\Repo_SE\App\obj\Debug\App.csproj.CopyComplete
+D:\Workspace\TDTU\SEing\Final_SE_HK1\App\obj\Debug\App.formUserInterface.resources
+D:\Workspace\TDTU\SEing\Final_SE_HK1\App\obj\Debug\App.formGDNprint.resources

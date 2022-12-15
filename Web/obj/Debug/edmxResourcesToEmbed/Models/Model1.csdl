@@ -1,0 +1,77 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="DangTanModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Order">
+    <Key>
+      <PropertyRef Name="oid" />
+    </Key>
+    <Property Name="oid" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="odate" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="delidate" Type="DateTime" Precision="0" />
+    <Property Name="paidmethod" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="agentname" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="agentphone" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="agentaddress" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="paymentstt" Type="Int32" />
+    <Property Name="orderstt" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="total" Type="Int32" />
+    <NavigationProperty Name="Orderprods" Relationship="Self.FK_OrdertoOrderprod" FromRole="Order" ToRole="Orderprod" />
+  </EntityType>
+  <EntityType Name="Orderprod">
+    <Key>
+      <PropertyRef Name="oid" />
+      <PropertyRef Name="prodid" />
+    </Key>
+    <Property Name="oid" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="prodid" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="quantity" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Order" Relationship="Self.FK_OrdertoOrderprod" FromRole="Orderprod" ToRole="Order" />
+    <NavigationProperty Name="Product" Relationship="Self.FK_ProductOrderprod" FromRole="Orderprod" ToRole="Product" />
+  </EntityType>
+  <EntityType Name="Product">
+    <Key>
+      <PropertyRef Name="prodid" />
+    </Key>
+    <Property Name="prodid" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="prodname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="quantity" Type="Int32" Nullable="false" />
+    <Property Name="price" Type="Int32" />
+    <NavigationProperty Name="Orderprods" Relationship="Self.FK_ProductOrderprod" FromRole="Product" ToRole="Orderprod" />
+  </EntityType>
+  <Association Name="FK_OrdertoOrderprod">
+    <End Role="Order" Type="Self.Order" Multiplicity="1" />
+    <End Role="Orderprod" Type="Self.Orderprod" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Order">
+        <PropertyRef Name="oid" />
+      </Principal>
+      <Dependent Role="Orderprod">
+        <PropertyRef Name="oid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProductOrderprod">
+    <End Role="Product" Type="Self.Product" Multiplicity="1" />
+    <End Role="Orderprod" Type="Self.Orderprod" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Product">
+        <PropertyRef Name="prodid" />
+      </Principal>
+      <Dependent Role="Orderprod">
+        <PropertyRef Name="prodid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="DevConn" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Orders" EntityType="Self.Order" />
+    <EntitySet Name="Orderprods" EntityType="Self.Orderprod" />
+    <EntitySet Name="Products" EntityType="Self.Product" />
+    <AssociationSet Name="FK_OrdertoOrderprod" Association="Self.FK_OrdertoOrderprod">
+      <End Role="Order" EntitySet="Orders" />
+      <End Role="Orderprod" EntitySet="Orderprods" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProductOrderprod" Association="Self.FK_ProductOrderprod">
+      <End Role="Product" EntitySet="Products" />
+      <End Role="Orderprod" EntitySet="Orderprods" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

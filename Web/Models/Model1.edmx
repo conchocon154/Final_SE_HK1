@@ -1,0 +1,221 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="DangTanModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Order">
+          <Key>
+            <PropertyRef Name="oid" />
+          </Key>
+          <Property Name="oid" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="odate" Type="date" Nullable="false" />
+          <Property Name="delidate" Type="date" />
+          <Property Name="paidmethod" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="agentname" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="agentphone" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="agentaddress" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="paymentstt" Type="int" />
+          <Property Name="orderstt" Type="varchar" MaxLength="30" />
+          <Property Name="total" Type="int" />
+        </EntityType>
+        <EntityType Name="Orderprod">
+          <Key>
+            <PropertyRef Name="oid" />
+            <PropertyRef Name="prodid" />
+          </Key>
+          <Property Name="oid" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="prodid" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="quantity" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="prodid" />
+          </Key>
+          <Property Name="prodid" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="prodname" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="quantity" Type="int" Nullable="false" />
+          <Property Name="price" Type="int" />
+        </EntityType>
+        <Association Name="FK_OrdertoOrderprod">
+          <End Role="Order" Type="Self.Order" Multiplicity="1" />
+          <End Role="Orderprod" Type="Self.Orderprod" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Order">
+              <PropertyRef Name="oid" />
+            </Principal>
+            <Dependent Role="Orderprod">
+              <PropertyRef Name="oid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductOrderprod">
+          <End Role="Product" Type="Self.Product" Multiplicity="1" />
+          <End Role="Orderprod" Type="Self.Orderprod" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="prodid" />
+            </Principal>
+            <Dependent Role="Orderprod">
+              <PropertyRef Name="prodid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DangTanModelStoreContainer">
+          <EntitySet Name="Order" EntityType="Self.Order" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Orderprod" EntityType="Self.Orderprod" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_OrdertoOrderprod" Association="Self.FK_OrdertoOrderprod">
+            <End Role="Order" EntitySet="Order" />
+            <End Role="Orderprod" EntitySet="Orderprod" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductOrderprod" Association="Self.FK_ProductOrderprod">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="Orderprod" EntitySet="Orderprod" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DangTanModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Order">
+          <Key>
+            <PropertyRef Name="oid" />
+          </Key>
+          <Property Name="oid" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="odate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="delidate" Type="DateTime" Precision="0" />
+          <Property Name="paidmethod" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="agentname" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="agentphone" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="agentaddress" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="paymentstt" Type="Int32" />
+          <Property Name="orderstt" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="total" Type="Int32" />
+          <NavigationProperty Name="Orderprods" Relationship="Self.FK_OrdertoOrderprod" FromRole="Order" ToRole="Orderprod" />
+        </EntityType>
+        <EntityType Name="Orderprod">
+          <Key>
+            <PropertyRef Name="oid" />
+            <PropertyRef Name="prodid" />
+          </Key>
+          <Property Name="oid" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="prodid" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="quantity" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Order" Relationship="Self.FK_OrdertoOrderprod" FromRole="Orderprod" ToRole="Order" />
+          <NavigationProperty Name="Product" Relationship="Self.FK_ProductOrderprod" FromRole="Orderprod" ToRole="Product" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="prodid" />
+          </Key>
+          <Property Name="prodid" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="prodname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="quantity" Type="Int32" Nullable="false" />
+          <Property Name="price" Type="Int32" />
+          <NavigationProperty Name="Orderprods" Relationship="Self.FK_ProductOrderprod" FromRole="Product" ToRole="Orderprod" />
+        </EntityType>
+        <Association Name="FK_OrdertoOrderprod">
+          <End Role="Order" Type="Self.Order" Multiplicity="1" />
+          <End Role="Orderprod" Type="Self.Orderprod" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Order">
+              <PropertyRef Name="oid" />
+            </Principal>
+            <Dependent Role="Orderprod">
+              <PropertyRef Name="oid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductOrderprod">
+          <End Role="Product" Type="Self.Product" Multiplicity="1" />
+          <End Role="Orderprod" Type="Self.Orderprod" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="prodid" />
+            </Principal>
+            <Dependent Role="Orderprod">
+              <PropertyRef Name="prodid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DevConn" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Orders" EntityType="Self.Order" />
+          <EntitySet Name="Orderprods" EntityType="Self.Orderprod" />
+          <EntitySet Name="Products" EntityType="Self.Product" />
+          <AssociationSet Name="FK_OrdertoOrderprod" Association="Self.FK_OrdertoOrderprod">
+            <End Role="Order" EntitySet="Orders" />
+            <End Role="Orderprod" EntitySet="Orderprods" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductOrderprod" Association="Self.FK_ProductOrderprod">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="Orderprod" EntitySet="Orderprods" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DangTanModelStoreContainer" CdmEntityContainer="DevConn">
+          <EntitySetMapping Name="Orders">
+            <EntityTypeMapping TypeName="DangTanModel.Order">
+              <MappingFragment StoreEntitySet="Order">
+                <ScalarProperty Name="oid" ColumnName="oid" />
+                <ScalarProperty Name="odate" ColumnName="odate" />
+                <ScalarProperty Name="delidate" ColumnName="delidate" />
+                <ScalarProperty Name="paidmethod" ColumnName="paidmethod" />
+                <ScalarProperty Name="agentname" ColumnName="agentname" />
+                <ScalarProperty Name="agentphone" ColumnName="agentphone" />
+                <ScalarProperty Name="agentaddress" ColumnName="agentaddress" />
+                <ScalarProperty Name="paymentstt" ColumnName="paymentstt" />
+                <ScalarProperty Name="orderstt" ColumnName="orderstt" />
+                <ScalarProperty Name="total" ColumnName="total" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Orderprods">
+            <EntityTypeMapping TypeName="DangTanModel.Orderprod">
+              <MappingFragment StoreEntitySet="Orderprod">
+                <ScalarProperty Name="oid" ColumnName="oid" />
+                <ScalarProperty Name="prodid" ColumnName="prodid" />
+                <ScalarProperty Name="quantity" ColumnName="quantity" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Products">
+            <EntityTypeMapping TypeName="DangTanModel.Product">
+              <MappingFragment StoreEntitySet="Product">
+                <ScalarProperty Name="prodid" ColumnName="prodid" />
+                <ScalarProperty Name="prodname" ColumnName="prodname" />
+                <ScalarProperty Name="quantity" ColumnName="quantity" />
+                <ScalarProperty Name="price" ColumnName="price" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

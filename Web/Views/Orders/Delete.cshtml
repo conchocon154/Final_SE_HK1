@@ -1,0 +1,96 @@
+﻿@model Web.Models.Order
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Order</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.odate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.odate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.delidate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.delidate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.paidmethod)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.paidmethod)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.agentname)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.agentname)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.agentphone)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.agentphone)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.agentaddress)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.agentaddress)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.paymentstt)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.paymentstt)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.orderstt)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.orderstt)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.total)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.total)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

@@ -1,4 +1,4 @@
-1. Run SQL file
+1. Run SQL file using XAMPP - MySQL
 2. Open solution file in App folder
 3. Start build and run project
 

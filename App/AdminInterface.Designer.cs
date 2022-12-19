@@ -32,20 +32,11 @@
             this.btnDelUser = new MaterialSkin.Controls.MaterialButton();
             this.btnUpdateUser = new MaterialSkin.Controls.MaterialButton();
             this.dataUser = new System.Windows.Forms.DataGridView();
-            this.usernameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.passwordDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.fullNameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.bDateDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.addressDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.genderDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.userBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.cosmesticDBDataSet = new App.CosmesticDBDataSet();
             this.materialButton1 = new MaterialSkin.Controls.MaterialButton();
-            this.userTableAdapter = new App.CosmesticDBDataSetTableAdapters.UserTableAdapter();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataUser)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.userBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.cosmesticDBDataSet)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -92,7 +83,7 @@
             this.txtUsernameAdmin.Hint = "Username";
             this.txtUsernameAdmin.LeadingIcon = null;
             this.txtUsernameAdmin.Location = new System.Drawing.Point(32, 306);
-            this.txtUsernameAdmin.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.txtUsernameAdmin.Margin = new System.Windows.Forms.Padding(2);
             this.txtUsernameAdmin.MaxLength = 50;
             this.txtUsernameAdmin.MouseState = MaterialSkin.MouseState.OUT;
             this.txtUsernameAdmin.Multiline = false;
@@ -111,7 +102,7 @@
             this.txtPassAdmin.Hint = "Password";
             this.txtPassAdmin.LeadingIcon = null;
             this.txtPassAdmin.Location = new System.Drawing.Point(32, 369);
-            this.txtPassAdmin.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.txtPassAdmin.Margin = new System.Windows.Forms.Padding(2);
             this.txtPassAdmin.MaxLength = 50;
             this.txtPassAdmin.MouseState = MaterialSkin.MouseState.OUT;
             this.txtPassAdmin.Multiline = false;
@@ -164,83 +155,23 @@
             // 
             // dataUser
             // 
-            this.dataUser.AutoGenerateColumns = false;
+            this.dataUser.AllowUserToAddRows = false;
+            this.dataUser.AllowUserToDeleteRows = false;
+            this.dataUser.AllowUserToResizeColumns = false;
+            this.dataUser.AllowUserToResizeRows = false;
             this.dataUser.BackgroundColor = System.Drawing.Color.Silver;
             this.dataUser.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataUser.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.usernameDataGridViewTextBoxColumn,
-            this.passwordDataGridViewTextBoxColumn,
-            this.fullNameDataGridViewTextBoxColumn,
-            this.bDateDataGridViewTextBoxColumn,
-            this.addressDataGridViewTextBoxColumn,
-            this.genderDataGridViewTextBoxColumn});
-            this.dataUser.DataSource = this.userBindingSource;
             this.dataUser.Location = new System.Drawing.Point(293, 131);
-            this.dataUser.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.dataUser.Margin = new System.Windows.Forms.Padding(2);
+            this.dataUser.MultiSelect = false;
             this.dataUser.Name = "dataUser";
+            this.dataUser.ReadOnly = true;
             this.dataUser.RowHeadersWidth = 51;
             this.dataUser.RowTemplate.Height = 24;
+            this.dataUser.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataUser.Size = new System.Drawing.Size(474, 361);
             this.dataUser.TabIndex = 6;
             this.dataUser.SelectionChanged += new System.EventHandler(this.dataUser_SelectionChanged);
-            // 
-            // usernameDataGridViewTextBoxColumn
-            // 
-            this.usernameDataGridViewTextBoxColumn.DataPropertyName = "username";
-            this.usernameDataGridViewTextBoxColumn.HeaderText = "username";
-            this.usernameDataGridViewTextBoxColumn.MinimumWidth = 6;
-            this.usernameDataGridViewTextBoxColumn.Name = "usernameDataGridViewTextBoxColumn";
-            this.usernameDataGridViewTextBoxColumn.Width = 125;
-            // 
-            // passwordDataGridViewTextBoxColumn
-            // 
-            this.passwordDataGridViewTextBoxColumn.DataPropertyName = "password";
-            this.passwordDataGridViewTextBoxColumn.HeaderText = "password";
-            this.passwordDataGridViewTextBoxColumn.MinimumWidth = 6;
-            this.passwordDataGridViewTextBoxColumn.Name = "passwordDataGridViewTextBoxColumn";
-            this.passwordDataGridViewTextBoxColumn.Width = 125;
-            // 
-            // fullNameDataGridViewTextBoxColumn
-            // 
-            this.fullNameDataGridViewTextBoxColumn.DataPropertyName = "fullName";
-            this.fullNameDataGridViewTextBoxColumn.HeaderText = "fullName";
-            this.fullNameDataGridViewTextBoxColumn.MinimumWidth = 6;
-            this.fullNameDataGridViewTextBoxColumn.Name = "fullNameDataGridViewTextBoxColumn";
-            this.fullNameDataGridViewTextBoxColumn.Width = 180;
-            // 
-            // bDateDataGridViewTextBoxColumn
-            // 
-            this.bDateDataGridViewTextBoxColumn.DataPropertyName = "BDate";
-            this.bDateDataGridViewTextBoxColumn.HeaderText = "BDate";
-            this.bDateDataGridViewTextBoxColumn.MinimumWidth = 6;
-            this.bDateDataGridViewTextBoxColumn.Name = "bDateDataGridViewTextBoxColumn";
-            this.bDateDataGridViewTextBoxColumn.Width = 140;
-            // 
-            // addressDataGridViewTextBoxColumn
-            // 
-            this.addressDataGridViewTextBoxColumn.DataPropertyName = "Address";
-            this.addressDataGridViewTextBoxColumn.HeaderText = "Address";
-            this.addressDataGridViewTextBoxColumn.MinimumWidth = 6;
-            this.addressDataGridViewTextBoxColumn.Name = "addressDataGridViewTextBoxColumn";
-            this.addressDataGridViewTextBoxColumn.Width = 125;
-            // 
-            // genderDataGridViewTextBoxColumn
-            // 
-            this.genderDataGridViewTextBoxColumn.DataPropertyName = "Gender";
-            this.genderDataGridViewTextBoxColumn.HeaderText = "Gender";
-            this.genderDataGridViewTextBoxColumn.MinimumWidth = 6;
-            this.genderDataGridViewTextBoxColumn.Name = "genderDataGridViewTextBoxColumn";
-            this.genderDataGridViewTextBoxColumn.Width = 125;
-            // 
-            // userBindingSource
-            // 
-            this.userBindingSource.DataMember = "User";
-            this.userBindingSource.DataSource = this.cosmesticDBDataSet;
-            // 
-            // cosmesticDBDataSet
-            // 
-            this.cosmesticDBDataSet.DataSetName = "CosmesticDBDataSet";
-            this.cosmesticDBDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
             // 
             // materialButton1
             // 
@@ -261,10 +192,6 @@
             this.materialButton1.UseAccentColor = false;
             this.materialButton1.UseVisualStyleBackColor = true;
             this.materialButton1.Click += new System.EventHandler(this.materialButton1_Click);
-            // 
-            // userTableAdapter
-            // 
-            this.userTableAdapter.ClearBeforeFill = true;
             // 
             // pictureBox1
             // 
@@ -298,7 +225,6 @@
             this.Load += new System.EventHandler(this.Admin_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataUser)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.userBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.cosmesticDBDataSet)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -315,15 +241,9 @@
         private MaterialSkin.Controls.MaterialButton btnUpdateUser;
         private System.Windows.Forms.DataGridView dataUser;
         private MaterialSkin.Controls.MaterialButton materialButton1;
-        private CosmesticDBDataSet cosmesticDBDataSet;
+        // CosmesticDBDataSet cosmesticDBDataSet;
         private System.Windows.Forms.BindingSource userBindingSource;
-        private CosmesticDBDataSetTableAdapters.UserTableAdapter userTableAdapter;
-        private System.Windows.Forms.DataGridViewTextBoxColumn usernameDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn passwordDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn fullNameDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn bDateDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn addressDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn genderDataGridViewTextBoxColumn;
+        //private CosmesticDBDataSetTableAdapters.UserTableAdapter userTableAdapter;
         private System.Windows.Forms.PictureBox pictureBox1;
     }
 }

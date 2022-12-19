@@ -1,5 +1,6 @@
 ﻿using MaterialSkin;
 using MaterialSkin.Controls;
+using MySqlConnector;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -9,6 +10,7 @@ using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -19,7 +21,7 @@ namespace App
     {
         readonly MaterialSkinManager materialSkinManager;
         static string conn = ConfigurationManager.ConnectionStrings["App.Properties.Settings.CosmesticDBConnectionString"].ConnectionString;
-        SqlConnection connection = new SqlConnection(conn);
+        MySqlConnection connection = new MySqlConnection(conn);
 
         String _username;
 
@@ -136,7 +138,7 @@ namespace App
 
             // add data to GRN table
 
-            SqlCommand cmdGRN = new SqlCommand("insert into [GRN] values(@grnid, @supplier, @receiver, @checker, @grndate)", connection);
+            MySqlCommand cmdGRN = new MySqlCommand("insert into `GRN` values(@grnid, @supplier, @receiver, @checker, @grndate)", connection);
 
             cmdGRN.Parameters.AddWithValue("@grnid", inid);
             cmdGRN.Parameters.AddWithValue("@supplier", insupplier);
@@ -161,41 +163,41 @@ namespace App
                 int inProdQuantity = Convert.ToInt32(dataGRNProd.Rows[i].Cells[2].Value);
                 int inProdPrice = Convert.ToInt32(dataGRNProd.Rows[i].Cells[3].Value);
 
-              
-                SqlCommand checkProd = new SqlCommand("SELECT count(*) FROM [Product] WHERE ([prodid] = '"+inProdID+ "')", connection);
+
+                MySqlCommand checkProd = new MySqlCommand("SELECT count(*) FROM `Product` WHERE (`prodid` = '"+inProdID+ "')", connection);
             
 
-                int prodReader = (int)checkProd.ExecuteScalar();
+                int prodReader = Convert.ToInt32(checkProd.ExecuteScalar());
 
                 //SqlDataReader prodReader = checkProd.ExecuteReader();
                 int checkProdExist = 0;
 
-                if (prodReader >0)
+                if (prodReader != 0)
                 {
                     //Product exist
                     checkProdExist = 1;
                 }
-               
-                //prodReader.Close();
-                //prodReader.Dispose();
 
-                SqlCommand cmdProduct;
+                    //prodReader.Close();
+                    //prodReader.Dispose();
+
+                MySqlCommand cmdProduct;
            
                 if (checkProdExist == 1)
                 {
 
-                     cmdProduct = new SqlCommand("update [Product] set prodname = '" + inProdName + "', quantity = quantity + '" + inProdQuantity + "', price =  '" + inProdPrice + "' where prodid = '" + inProdID + "'", connection);
-                   
+                     cmdProduct = new MySqlCommand("update `Product` set prodname = '" + inProdName + "', quantity = quantity + '" + inProdQuantity + "', price =  '" + inProdPrice + "' where prodid = '" + inProdID + "'", connection);
+                     Console.WriteLine("alovailoz");
 
                 }
                 else
                 {
-                     cmdProduct = new SqlCommand("insert into [Product] values('"+ inProdID+"', '"+ inProdName + "', '" + inProdQuantity + "', '" + inProdPrice + "')", connection);
+                     cmdProduct = new MySqlCommand("insert into `Product` values('"+ inProdID+"', '"+ inProdName + "', '" + inProdQuantity + "', '" + inProdPrice + "')", connection);
                     
                 }
                 ifAddProduct = cmdProduct.ExecuteNonQuery();
 
-                SqlCommand cmdGRNprod = new SqlCommand("insert into [GRNprod] values('" + inid + "', '" + inProdID + "', '" + inProdQuantity + "')", connection);
+                MySqlCommand cmdGRNprod = new MySqlCommand("insert into `GRNprod` values('" + inid + "', '" + inProdID + "', '" + inProdQuantity + "')", connection);
 
                 ifAddGRNprod = cmdGRNprod.ExecuteNonQuery();
             }
@@ -211,7 +213,14 @@ namespace App
             }
             }catch(Exception er)
             {
-                MessageBox.Show("Failed");
+                var st = new StackTrace(er, true);
+                // Get the top stack frame
+                var frame = st.GetFrame(0);
+                // Get the line number from the stack frame
+                var line = frame.GetFileLineNumber();
+
+                Console.WriteLine(er.Message + " - " + er.Source + " - L: " + line);
+                MessageBox.Show("Failed er");
             }
 
             connection.Close();
@@ -267,7 +276,7 @@ namespace App
 
             DataTable dtb = new DataTable();
 
-            SqlDataAdapter da = new SqlDataAdapter("select oid from [Order] where odate BETWEEN '" + dateFrom + "' and '" + dateTo + "'", connection);
+            MySqlDataAdapter da = new MySqlDataAdapter("select oid from `Orders` where odate BETWEEN '" + dateFrom + "' and '" + dateTo + "'", connection);
             da.Fill(dtb);
             //cmdDate.ExecuteNonQuery();
             comboOrderList.ValueMember = "oid";
@@ -290,8 +299,8 @@ namespace App
             listViewProdOL.Items.Clear();
 
             String inoid = comboOrderList.SelectedValue.ToString();
-            SqlCommand cmdOrder = new SqlCommand("select agentname, agentaddress, agentphone, paymentstt, orderstt from [Order] where oid = '" + inoid + "'", connection);
-            SqlDataReader sdr = cmdOrder.ExecuteReader();
+            MySqlCommand cmdOrder = new MySqlCommand("select agentname, agentaddress, agentphone, paymentstt, orderstt from `Orders` where oid = '" + inoid + "'", connection);
+            MySqlDataReader sdr = cmdOrder.ExecuteReader();
             while (sdr.Read())
             {
                 txtAgentNameOL.Text = sdr["agentname"].ToString();
@@ -311,11 +320,11 @@ namespace App
             }
             sdr.Close();
 
-            //SqlCommand cmdProdOrder = new SqlCommand("select prodid, prodname, quantity, price from Product join Orderprod on Product.prodid = Orderprod.prodid  join [Order] on [Order].oid = Orderprod.oid where[Order].oid = '"+ inoid + "'", connection);
+            //SqlCommand cmdProdOrder = new SqlCommand("select prodid, prodname, quantity, price from Product join Orderprod on Product.prodid = Orderprod.prodid  join `Orders` on `Orders`.oid = Orderprod.oid where`Orders`.oid = '"+ inoid + "'", connection);
             //SqlDataReader tmp = cmdOrder.ExecuteReader();
 
             DataSet prodDS = new DataSet();
-            SqlDataAdapter adapter = new SqlDataAdapter("select Product.prodid, Product.prodname, Product.price, Orderprod.quantity from Product join Orderprod on Product.prodid = Orderprod.prodid  join [Order] on [Order].oid = Orderprod.oid where[Order].oid = '" + inoid + "'", connection);
+            MySqlDataAdapter adapter = new MySqlDataAdapter("select Product.prodid, Product.prodname, Product.price, Orderprod.quantity from Product join Orderprod on Product.prodid = Orderprod.prodid  join `Orders` on `Orders`.oid = Orderprod.oid where `Orders`.oid = '" + inoid + "'", connection);
             adapter.Fill(prodDS);
             foreach (DataRow row in prodDS.Tables[0].Rows)
             {
@@ -341,7 +350,7 @@ namespace App
             {
                 inPaymentstt = 1;
             }
-            SqlCommand cmdProdOrder = new SqlCommand("update [Order] set paymentstt = '"+ inPaymentstt+"', orderstt = '"+ inOrderstt+"' where oid = '"+ inoid+"'", connection);
+            MySqlCommand cmdProdOrder = new MySqlCommand("update `Orders` set paymentstt = '"+ inPaymentstt+"', orderstt = '"+ inOrderstt+"' where oid = '"+ inoid+"'", connection);
             cmdProdOrder.ExecuteNonQuery();
             MessageBox.Show("Saved");
             connection.Close();
@@ -354,7 +363,7 @@ namespace App
             connection.Open();
             DataTable dtbGDN = new DataTable();
 
-            SqlDataAdapter da = new SqlDataAdapter("select oid from [Order] where orderstt = 'Pending'", connection);
+            MySqlDataAdapter da = new MySqlDataAdapter("select oid from `Orders` where orderstt = 'Pending'", connection);
             da.Fill(dtbGDN);
             //cmdDate.ExecuteNonQuery();
             comboOrderGDN.ValueMember = "oid";
@@ -371,8 +380,8 @@ namespace App
             listViewProdGDN.Items.Clear();
 
             String inoid = comboOrderGDN.SelectedValue.ToString();
-            SqlCommand cmdOrder = new SqlCommand("select agentname, agentaddress, agentphone, paymentstt, orderstt from [Order] where oid = '" + inoid + "'", connection);
-            SqlDataReader sdrGDN = cmdOrder.ExecuteReader();
+            MySqlCommand cmdOrder = new MySqlCommand("select agentname, agentaddress, agentphone, paymentstt, orderstt from `Orders` where oid = '" + inoid + "'", connection);
+            MySqlDataReader sdrGDN = cmdOrder.ExecuteReader();
             while (sdrGDN.Read())
             {
                 txtAgentName.Text = sdrGDN["agentname"].ToString();
@@ -383,11 +392,11 @@ namespace App
             }
             sdrGDN.Close();
 
-            //SqlCommand cmdProdOrder = new SqlCommand("select prodid, prodname, quantity, price from Product join Orderprod on Product.prodid = Orderprod.prodid  join [Order] on [Order].oid = Orderprod.oid where[Order].oid = '"+ inoid + "'", connection);
+            //SqlCommand cmdProdOrder = new SqlCommand("select prodid, prodname, quantity, price from Product join Orderprod on Product.prodid = Orderprod.prodid  join `Orders` on `Orders`.oid = Orderprod.oid where`Orders`.oid = '"+ inoid + "'", connection);
             //SqlDataReader tmp = cmdOrder.ExecuteReader();
 
             DataSet prodGDN = new DataSet();
-            SqlDataAdapter adapter = new SqlDataAdapter("select Product.prodid, Product.prodname, Product.price, Orderprod.quantity from Product join Orderprod on Product.prodid = Orderprod.prodid  join [Order] on [Order].oid = Orderprod.oid where[Order].oid = '" + inoid + "'", connection);
+            MySqlDataAdapter adapter = new MySqlDataAdapter("select Product.prodid, Product.prodname, Product.price, Orderprod.quantity from Product join Orderprod on Product.prodid = Orderprod.prodid  join `Orders` on `Orders`.oid = Orderprod.oid where `Orders`.oid = '" + inoid + "'", connection);
             adapter.Fill(prodGDN);
             foreach (DataRow row in prodGDN.Tables[0].Rows)
             {
@@ -398,28 +407,28 @@ namespace App
                 listViewProdGDN.Items.Add(item);
             }
 
-            SqlCommand cmdTotal = new SqlCommand("select sum(Product.price*Orderprod.quantity) from Product join Orderprod on Product.prodid = Orderprod.prodid  join [Order] on [Order].oid = Orderprod.oid where [Order].oid = '"+ inoid + "'", connection);
-            SqlDataReader dtTotal = cmdTotal.ExecuteReader();
+            MySqlCommand cmdTotal = new MySqlCommand("select sum(Product.price*Orderprod.quantity) from Product join Orderprod on Product.prodid = Orderprod.prodid  join `Orders` on `Orders`.oid = Orderprod.oid where `Orders`.oid = '" + inoid + "'", connection);
+            MySqlDataReader dtTotal = cmdTotal.ExecuteReader();
             if (dtTotal.Read())
             {
                 txtTotal.Text = dtTotal.GetValue(0).ToString();
             }
             dtTotal.Close();
 
-            SqlCommand cmdMed = new SqlCommand("select paidmethod from [Order] where oid = '" + inoid + "'", connection);
-            SqlDataReader dtMed = cmdMed.ExecuteReader();
+            MySqlCommand cmdMed = new MySqlCommand("select paidmethod from `Orders` where oid = '" + inoid + "'", connection);
+            MySqlDataReader dtMed = cmdMed.ExecuteReader();
             if (dtMed.Read())
             {
                 txtMethod.Text = dtMed.GetValue(0).ToString();
             }
             dtMed.Close();
 
-            SqlCommand cmdAddTotal = new SqlCommand("update [Order] set total = (select sum(Product.price * Orderprod.quantity) from Product join Orderprod on Product.prodid = Orderprod.prodid  join [Order] on [Order].oid = Orderprod.oid where [Order].oid = '" + inoid + "') where oid = '" + inoid + "'", connection);
-            cmdAddTotal.ExecuteNonQuery();
+            //MySqlCommand cmdAddTotal = new MySqlCommand("update `Orders` set total = (select sum(Product.price * Orderprod.quantity) from Product join Orderprod on Product.prodid = Orderprod.prodid  join `Orders` on `Orders`.oid = Orderprod.oid where `Orders`.oid = '" + inoid + "') where oid = '" + inoid + "'", connection);
+            //cmdAddTotal.ExecuteNonQuery();
 
-            DateTime deliDate = dateDelivery.Value.Date;
-            SqlCommand cmdaddDelDate = new SqlCommand("update [Order] set delidate = '" + deliDate + "' where oid = '" + inoid + "'", connection);
-            cmdaddDelDate.ExecuteNonQuery();
+            //DateTime deliDate = dateDelivery.Value.Date;
+            //MySqlCommand cmdaddDelDate = new MySqlCommand("update `Orders` set delidate = '" + deliDate + "' where oid = '" + inoid + "'", connection);
+            //cmdaddDelDate.ExecuteNonQuery();
             connection.Close();
         }
 
@@ -427,7 +436,12 @@ namespace App
         {
             String inoid = comboOrderGDN.SelectedValue.ToString();
 
-            using(formGDNprint frm = new formGDNprint(inoid))
+            String dayFrom = dateDelivery.Value.Day.ToString();
+            String monthFrom = dateDelivery.Value.Month.ToString();
+            String yearFrom = dateDelivery.Value.Year.ToString();
+            String deli = yearFrom + "-" + monthFrom + "-" + dayFrom;
+
+            using(formGDNprint frm = new formGDNprint(inoid, deli))
             {
                 frm.ShowDialog();
             }
@@ -444,24 +458,24 @@ namespace App
             dataGDNrv.Rows.Clear();
             dataGRNrv.Rows.Clear();
 
-            SqlCommand cmdRevenue = new SqlCommand("select sum(total) as Revenue from [Order] where month(odate) = " + month + "  and year(odate) = "+ year + "", connection);
-            SqlDataReader dtRe = cmdRevenue.ExecuteReader();
+            MySqlCommand cmdRevenue = new MySqlCommand("select sum(total) as Revenue from `Orders` where month(odate) = " + month + "  and year(odate) = "+ year + "", connection);
+            MySqlDataReader dtRe = cmdRevenue.ExecuteReader();
             while (dtRe.Read())
             {
                 txtRevenue.Text = dtRe.GetValue(0).ToString();
             }
             dtRe.Close();
 
-            SqlCommand cmdOut = new SqlCommand("select sum(quantity) from [Orderprod] join [Order] on [Order].oid = Orderprod.oid where month(odate) = " + month + "  and year(odate) = " + year + " ", connection);
-            SqlDataReader dtOut = cmdOut.ExecuteReader();
+            MySqlCommand cmdOut = new MySqlCommand("select sum(quantity) from `Orderprod` join `Orders` on `Orders`.oid = Orderprod.oid where month(odate) = " + month + "  and year(odate) = " + year + " ", connection);
+            MySqlDataReader dtOut = cmdOut.ExecuteReader();
             while (dtOut.Read())
             {
                 txtOut.Text = dtOut.GetValue(0).ToString();
             }
             dtOut.Close();
 
-            SqlCommand cmdIn = new SqlCommand("select sum(GRNprod.quantity) from [GRNprod] join [GRN] on [GRN].grnid = GRNprod.grnid where month(grndate) = " + month + "  and year(grndate) = " + year + " ", connection);
-            SqlDataReader dtIn = cmdIn.ExecuteReader();
+            MySqlCommand cmdIn = new MySqlCommand("select sum(GRNprod.quantity) from `GRNprod` join `GRN` on `GRN`.grnid = GRNprod.grnid where month(grndate) = " + month + "  and year(grndate) = " + year + " ", connection);
+            MySqlDataReader dtIn = cmdIn.ExecuteReader();
             while (dtIn.Read())
             {
                 txtIn.Text = dtIn.GetValue(0).ToString();
@@ -470,7 +484,7 @@ namespace App
 
 
             DataSet drnrv = new DataSet();
-            SqlDataAdapter adapter = new SqlDataAdapter("select GRNprod.grnid, sum(GRNprod.quantity) as qty, GRN.grndate from GRN join GRNprod on GRN.grnid = GRNprod.grnid  where month(grndate) = " + month + "  and year(grndate) = " + year + " group by GRNprod.grnid, GRN.grndate", connection);
+            MySqlDataAdapter adapter = new MySqlDataAdapter("select GRNprod.grnid, sum(GRNprod.quantity) as qty, GRN.grndate from GRN join GRNprod on GRN.grnid = GRNprod.grnid  where month(grndate) = " + month + "  and year(grndate) = " + year + " group by GRNprod.grnid, GRN.grndate", connection);
             adapter.Fill(drnrv);
             foreach (DataRow row in drnrv.Tables[0].Rows)
             {
@@ -478,7 +492,7 @@ namespace App
             }
 
             DataSet gdnrv = new DataSet();
-            SqlDataAdapter gadapter = new SqlDataAdapter("select [Orderprod].oid, sum(Orderprod.quantity) as oqty, [Order].odate from [Order] join [Orderprod] on [Order].oid = Orderprod.oid  where month(odate) = " + month + "  and year(odate) = " + year + " group by Orderprod.oid, [Order].odate ", connection);
+            MySqlDataAdapter gadapter = new MySqlDataAdapter("select `Orderprod`.oid, sum(Orderprod.quantity) as oqty, `Orders`.odate from `Orders` join `Orderprod` on `Orders`.oid = Orderprod.oid  where month(odate) = " + month + "  and year(odate) = " + year + " group by Orderprod.oid, `Orders`.odate ", connection);
             gadapter.Fill(gdnrv);
             foreach (DataRow row in gdnrv.Tables[0].Rows)
             {
@@ -509,7 +523,7 @@ namespace App
                 gender = "F";
             }
 
-            SqlCommand cmdUpd = new SqlCommand("update [User] set fullName = '"+fname+ "', BDate ='" + Birth + "', Address = '" + address + "', phone = '"+ phone +"', Gender = '" + gender + "' where username = '"+_username+"' ", connection);
+            MySqlCommand cmdUpd = new MySqlCommand("update `Users` set fullName = '"+fname+ "', BDate ='" + bdate + "', Address = '" + address + "', phone = '"+ phone +"', Gender = '" + gender + "' where username = '"+_username+"' ", connection);
             int update = cmdUpd.ExecuteNonQuery();
             if(update > 0)
             {
@@ -533,8 +547,8 @@ namespace App
             String confp = txtConfPass.Text;
             int updatep = 0;
 
-            SqlCommand cmdp = new SqlCommand("select password from [User] where username = '"+ _username+"' ", connection);
-            SqlDataReader dtp = cmdp.ExecuteReader();
+            MySqlCommand cmdp = new MySqlCommand("select password from `Users` where username = '"+ _username+"' ", connection);
+            MySqlDataReader dtp = cmdp.ExecuteReader();
             while (dtp.Read())
             {
                if(currp.Equals(dtp.GetValue(0).ToString()) && newp.Equals(confp))
@@ -547,7 +561,7 @@ namespace App
 
             if (updatep > 0)
             {
-                SqlCommand cmdupp = new SqlCommand("update [User] set password = '" + newp + "'where username = '" + _username + "' ", connection);
+                MySqlCommand cmdupp = new MySqlCommand("update `Users` set password = '" + newp + "'where username = '" + _username + "' ", connection);
                 updatep = cmdupp.ExecuteNonQuery();
                 MessageBox.Show("Password Saved");
             }
@@ -563,6 +577,23 @@ namespace App
         private void materialTabSelector1_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void updateDeliBtn_Click(object sender, EventArgs e)
+        {
+            connection.Open();
+
+            String inoid = comboOrderGDN.SelectedValue.ToString();
+
+            String dayFrom = dateDelivery.Value.Day.ToString();
+            String monthFrom = dateDelivery.Value.Month.ToString();
+            String yearFrom = dateDelivery.Value.Year.ToString();
+            String deli = yearFrom + "-" + monthFrom + "-" + dayFrom;
+
+            MySqlCommand cmd = new MySqlCommand("update `Orders` set delidate = '" + deli + "' where oid = '" + inoid + "'", connection);
+            cmd.ExecuteNonQuery();
+
+            connection.Close();
         }
     }
 }

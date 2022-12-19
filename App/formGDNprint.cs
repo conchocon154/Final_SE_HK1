@@ -1,5 +1,6 @@
 ﻿using MaterialSkin;
 using MaterialSkin.Controls;
+using MySqlConnector;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -8,6 +9,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -20,13 +22,15 @@ namespace App
     {
         readonly MaterialSkinManager materialSkinManager;
         static string conn = ConfigurationManager.ConnectionStrings["App.Properties.Settings.CosmesticDBConnectionString"].ConnectionString;
-        SqlConnection connection = new SqlConnection(conn);
+        MySqlConnection connection = new MySqlConnection(conn);
 
         String _id = "";
-        public formGDNprint(String id)
+        String _deli = "";
+        public formGDNprint(String id, String deli)
         {
             InitializeComponent();
             _id = id;
+            _deli = deli;
 
             // Create a material theme manager and add the form to manage (this)
             materialSkinManager = MaterialSkinManager.Instance;
@@ -52,8 +56,8 @@ namespace App
             //SqlDataAdapter da = new SqlDataAdapter("select Orderprod.prodid, Product.prodname, Orderprod.quantity, Product.price from Product join Orderprod on Product.prodid = Orderprod.prodid where Orderprod.oid = '" + _id + "'", connection);
             //da.Fill(dtb);
 
-            SqlDataAdapter da = new SqlDataAdapter("select * from Product", connection);
-            SqlDataAdapter db = new SqlDataAdapter("select * from Orderprod where Orderprod.oid = '" + _id + "'", connection);
+            MySqlDataAdapter da = new MySqlDataAdapter("select * from Product", connection);
+            MySqlDataAdapter db = new MySqlDataAdapter("select * from Orderprod where Orderprod.oid = '" + _id + "'", connection);
 
             DataTable taba = new DataTable("Product");
             DataTable tabb = new DataTable("Orderprod");
@@ -67,18 +71,20 @@ namespace App
             gdn1.SetDataSource(dtb);
 
             crystalReportViewer1.ReportSource = gdn1;
-            SqlCommand cmd = new SqlCommand("select * from [Order] where oid = '" + _id + "'", connection);
-            SqlDataReader sdr = cmd.ExecuteReader();
+            MySqlCommand cmd = new MySqlCommand("select * from `Orders` where oid = '" + _id + "'", connection);
+            MySqlDataReader sdr = cmd.ExecuteReader();
+            
+
             while (sdr.Read())
             {
+
                 gdn1.SetParameterValue("agName", sdr["agentname"].ToString());
                 gdn1.SetParameterValue("agNumber", sdr["agentphone"].ToString());
                 gdn1.SetParameterValue("agAddress", sdr["agentaddress"].ToString());
                 gdn1.SetParameterValue("orderID", _id);
-                gdn1.SetParameterValue("date", sdr["delidate"].ToString());
+                gdn1.SetParameterValue("date", _deli);
                 gdn1.SetParameterValue("total", sdr["total"].ToString());
                 gdn1.SetParameterValue("method", sdr["paidmethod"].ToString());
-
             }
             sdr.Close();
 

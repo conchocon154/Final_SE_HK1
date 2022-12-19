@@ -1,5 +1,6 @@
 ﻿using MaterialSkin;
 using MaterialSkin.Controls;
+using MySqlConnector;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -21,7 +22,7 @@ namespace App
     {
         readonly MaterialSkinManager materialSkinManager;
         static string conn = ConfigurationManager.ConnectionStrings["App.Properties.Settings.CosmesticDBConnectionString"].ConnectionString;
-        SqlConnection connection = new SqlConnection(conn);
+        MySqlConnection connection = new MySqlConnection(conn);
 
         public Admin()
         {
@@ -60,8 +61,38 @@ namespace App
         private void Admin_Load(object sender, EventArgs e)
         {
             // TODO: This line of code loads data into the 'cosmesticDBDataSet.User' table. You can move, or remove it, as needed.
-            this.userTableAdapter.Fill(this.cosmesticDBDataSet.User);
+            // this.userTableAdapter.Fill(this.cosmesticDBDataSet.User);
+            // Console.WriteLine("Ayo:" + this.cosmesticDBDataSet.User);
 
+            loadData(connection);
+
+        }
+
+        private void loadData(MySqlConnection connection)
+        {
+            try
+            {
+                MySqlCommand cmd = new MySqlCommand("SELECT * FROM `Users`", connection);
+                MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
+
+                DataTable dt = new DataTable();
+                adapter.Fill(dt);
+
+                if (dt.Rows.Count > 0)
+                {
+                    dataUser.DataSource = dt;
+                }
+                else
+                {
+                    MessageBox.Show("No Data");
+                }
+
+                adapter.Dispose();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error:" + ex.Message + "-" + ex.Source);
+            }
         }
 
         private void btnAddUser_Click(object sender, EventArgs e)
@@ -71,7 +102,7 @@ namespace App
             String name = txtUsernameAdmin.Text;
             String pass = txtPassAdmin.Text;
 
-            SqlCommand cmdAdd = new SqlCommand("insert into [User] values('" + name + "', '" + pass + "', '','','','','')", connection);
+            MySqlCommand cmdAdd = new MySqlCommand("insert into `Users` (username, password) values('" + name + "', '" + pass + "')", connection);
             try
             {
                 int isAdd = cmdAdd.ExecuteNonQuery();
@@ -80,7 +111,7 @@ namespace App
                 {
                     MessageBox.Show("User Added");
 
-                    this.userTableAdapter.Fill(this.cosmesticDBDataSet.User);
+                    loadData(connection);
                     dataUser.Update();
                     dataUser.Refresh();
                 }
@@ -90,7 +121,8 @@ namespace App
                 }
             }catch(Exception er)
             {
-                MessageBox.Show("Failed");
+                Console.WriteLine(er.Message);
+                MessageBox.Show("Failed er");
             }
 
     connection.Close();
@@ -103,7 +135,7 @@ namespace App
             foreach (DataGridViewRow item in this.dataUser.SelectedRows)
             {
                 String user = item.Cells[0].Value.ToString();
-                SqlCommand cmdDel = new SqlCommand("delete from [User] where username = '"+user+"'", connection);
+                MySqlCommand cmdDel = new MySqlCommand("delete from `Users` where username = '"+user+"'", connection);
 
                 try { 
                 int isDel = cmdDel.ExecuteNonQuery();
@@ -111,7 +143,7 @@ namespace App
                 if (isDel > 0)
                 {
                     MessageBox.Show("User Deleted");
-                    this.userTableAdapter.Fill(this.cosmesticDBDataSet.User);
+                    loadData(connection);
                     dataUser.Update();
                     dataUser.Refresh();
                 }
@@ -153,7 +185,7 @@ namespace App
                 String newname = txtUsernameAdmin.Text;
                 String newpass = txtPassAdmin.Text;
 
-                SqlCommand cmdUpd = new SqlCommand("update [User] set username = '"+newname+"', password = '"+newpass+"' where username = '" + user + "'", connection);
+                MySqlCommand cmdUpd = new MySqlCommand("update `Users` set username = '"+newname+"', password = '"+newpass+"' where username = '" + user + "'", connection);
                 try
                 {
 
@@ -163,7 +195,7 @@ namespace App
                 if (isUpd > 0)
                 {
                     MessageBox.Show("User Updated");
-                    this.userTableAdapter.Fill(this.cosmesticDBDataSet.User);
+                    loadData(connection);
                    
                     dataUser.Refresh();
                 }

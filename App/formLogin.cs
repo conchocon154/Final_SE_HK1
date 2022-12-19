@@ -1,5 +1,6 @@
 ﻿using MaterialSkin;
 using MaterialSkin.Controls;
+using MySqlConnector;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -19,7 +20,7 @@ namespace App
     {
         readonly MaterialSkinManager materialSkinManager;
         static string conn = ConfigurationManager.ConnectionStrings["App.Properties.Settings.CosmesticDBConnectionString"].ConnectionString;
-        SqlConnection connection = new SqlConnection(conn);
+        MySqlConnection connection = new MySqlConnection(conn);
 
 
         public formLogin()
@@ -51,7 +52,7 @@ namespace App
 
             using ( var cmd = connection.CreateCommand())
             {
-                cmd.CommandText = "select username, password from [User] where username ='" + username + "' and password ='" + password +"'";
+                cmd.CommandText = "select username, password from `Users` where username ='" + username + "' and password ='" + password +"'";
                 using(var reader = cmd.ExecuteReader())
                 {
                     while(reader.Read())

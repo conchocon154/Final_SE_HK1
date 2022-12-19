@@ -128,6 +128,7 @@
             this.icon = new System.Windows.Forms.ImageList(this.components);
             this.printDialog1 = new System.Windows.Forms.PrintDialog();
             this.materialTabSelector1 = new MaterialSkin.Controls.MaterialTabSelector();
+            this.updateDeliBtn = new MaterialSkin.Controls.MaterialButton();
             this.materialTabControl1.SuspendLayout();
             this.tabGRN.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGRNProd)).BeginInit();
@@ -299,10 +300,11 @@
             // 
             this.dateGRN.CalendarForeColor = System.Drawing.Color.White;
             this.dateGRN.CalendarMonthBackground = System.Drawing.SystemColors.MenuText;
+            this.dateGRN.Format = System.Windows.Forms.DateTimePickerFormat.Short;
             this.dateGRN.Location = new System.Drawing.Point(356, 454);
             this.dateGRN.Margin = new System.Windows.Forms.Padding(2);
             this.dateGRN.Name = "dateGRN";
-            this.dateGRN.Size = new System.Drawing.Size(210, 20);
+            this.dateGRN.Size = new System.Drawing.Size(95, 20);
             this.dateGRN.TabIndex = 34;
             // 
             // txtProdPrice
@@ -510,6 +512,7 @@
             // 
             // tabGDN
             // 
+            this.tabGDN.Controls.Add(this.updateDeliBtn);
             this.tabGDN.Controls.Add(this.cbxIsPaid);
             this.tabGDN.Controls.Add(this.txtMethod);
             this.tabGDN.Controls.Add(this.txtTotal);
@@ -686,7 +689,6 @@
             this.columnHeader3});
             this.listViewProdGDN.Depth = 0;
             this.listViewProdGDN.FullRowSelect = true;
-            this.listViewProdGDN.GridLines = true;
             this.listViewProdGDN.HideSelection = false;
             this.listViewProdGDN.Location = new System.Drawing.Point(290, 109);
             this.listViewProdGDN.Margin = new System.Windows.Forms.Padding(2);
@@ -744,10 +746,11 @@
             // 
             this.dateDelivery.CalendarForeColor = System.Drawing.Color.White;
             this.dateDelivery.CalendarMonthBackground = System.Drawing.SystemColors.MenuText;
-            this.dateDelivery.Location = new System.Drawing.Point(970, 72);
+            this.dateDelivery.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dateDelivery.Location = new System.Drawing.Point(1044, 69);
             this.dateDelivery.Margin = new System.Windows.Forms.Padding(2);
             this.dateDelivery.Name = "dateDelivery";
-            this.dateDelivery.Size = new System.Drawing.Size(172, 20);
+            this.dateDelivery.Size = new System.Drawing.Size(99, 20);
             this.dateDelivery.TabIndex = 19;
             // 
             // materialLabel6
@@ -755,7 +758,7 @@
             this.materialLabel6.AutoSize = true;
             this.materialLabel6.Depth = 0;
             this.materialLabel6.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.materialLabel6.Location = new System.Drawing.Point(872, 73);
+            this.materialLabel6.Location = new System.Drawing.Point(946, 70);
             this.materialLabel6.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.materialLabel6.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialLabel6.Name = "materialLabel6";
@@ -1031,7 +1034,6 @@
             this.colProdPrice});
             this.listViewProdOL.Depth = 0;
             this.listViewProdOL.FullRowSelect = true;
-            this.listViewProdOL.GridLines = true;
             this.listViewProdOL.HideSelection = false;
             this.listViewProdOL.Location = new System.Drawing.Point(349, 107);
             this.listViewProdOL.Margin = new System.Windows.Forms.Padding(2);
@@ -1465,10 +1467,11 @@
             // 
             // dateBirth
             // 
+            this.dateBirth.Format = System.Windows.Forms.DateTimePickerFormat.Short;
             this.dateBirth.Location = new System.Drawing.Point(360, 146);
             this.dateBirth.Margin = new System.Windows.Forms.Padding(2);
             this.dateBirth.Name = "dateBirth";
-            this.dateBirth.Size = new System.Drawing.Size(182, 20);
+            this.dateBirth.Size = new System.Drawing.Size(89, 20);
             this.dateBirth.TabIndex = 4;
             this.dateBirth.Value = new System.DateTime(2022, 1, 4, 5, 21, 19, 0);
             // 
@@ -1710,7 +1713,7 @@
             this.materialTabSelector1.Cursor = System.Windows.Forms.Cursors.Default;
             this.materialTabSelector1.Depth = 0;
             this.materialTabSelector1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.materialTabSelector1.Font = new System.Drawing.Font("Arial", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel);
+            this.materialTabSelector1.Font = new System.Drawing.Font("Roboto", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.materialTabSelector1.Location = new System.Drawing.Point(1, 64);
             this.materialTabSelector1.Margin = new System.Windows.Forms.Padding(0);
             this.materialTabSelector1.MouseState = MaterialSkin.MouseState.HOVER;
@@ -1720,6 +1723,26 @@
             this.materialTabSelector1.TabIndex = 1;
             this.materialTabSelector1.Text = "materialTabSelector1";
             this.materialTabSelector1.Click += new System.EventHandler(this.materialTabSelector1_Click);
+            // 
+            // updateDeliBtn
+            // 
+            this.updateDeliBtn.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.updateDeliBtn.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
+            this.updateDeliBtn.Depth = 0;
+            this.updateDeliBtn.HighEmphasis = true;
+            this.updateDeliBtn.Icon = null;
+            this.updateDeliBtn.Location = new System.Drawing.Point(829, 445);
+            this.updateDeliBtn.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
+            this.updateDeliBtn.MouseState = MaterialSkin.MouseState.HOVER;
+            this.updateDeliBtn.Name = "updateDeliBtn";
+            this.updateDeliBtn.NoAccentTextColor = System.Drawing.Color.Empty;
+            this.updateDeliBtn.Size = new System.Drawing.Size(188, 36);
+            this.updateDeliBtn.TabIndex = 38;
+            this.updateDeliBtn.Text = "Update Delivery Date";
+            this.updateDeliBtn.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
+            this.updateDeliBtn.UseAccentColor = false;
+            this.updateDeliBtn.UseVisualStyleBackColor = true;
+            this.updateDeliBtn.Click += new System.EventHandler(this.updateDeliBtn_Click);
             // 
             // formUserInterface
             // 
@@ -1856,5 +1879,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn quantity;
         private System.Windows.Forms.DataGridViewTextBoxColumn grndate;
         private MaterialSkin.Controls.MaterialTabSelector materialTabSelector1;
+        private MaterialSkin.Controls.MaterialButton updateDeliBtn;
     }
 }

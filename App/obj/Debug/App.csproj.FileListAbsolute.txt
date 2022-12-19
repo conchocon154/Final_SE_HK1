@@ -65,3 +65,17 @@ D:\Workspace\TDTU\Repo_SE\App\bin\Debug\stdole.dll
 D:\Workspace\TDTU\Repo_SE\App\obj\Debug\App.csproj.CopyComplete
 D:\Workspace\TDTU\SEing\Final_SE_HK1\App\obj\Debug\App.formUserInterface.resources
 D:\Workspace\TDTU\SEing\Final_SE_HK1\App\obj\Debug\App.formGDNprint.resources
+D:\Workspace\TDTU\SEing\Final_SE_HK1\App\bin\Debug\MySqlConnector.dll
+D:\Workspace\TDTU\SEing\Final_SE_HK1\App\bin\Debug\System.Buffers.dll
+D:\Workspace\TDTU\SEing\Final_SE_HK1\App\bin\Debug\System.Diagnostics.DiagnosticSource.dll
+D:\Workspace\TDTU\SEing\Final_SE_HK1\App\bin\Debug\System.Memory.dll
+D:\Workspace\TDTU\SEing\Final_SE_HK1\App\bin\Debug\System.Numerics.Vectors.dll
+D:\Workspace\TDTU\SEing\Final_SE_HK1\App\bin\Debug\System.Runtime.CompilerServices.Unsafe.dll
+D:\Workspace\TDTU\SEing\Final_SE_HK1\App\bin\Debug\System.Threading.Tasks.Extensions.dll
+D:\Workspace\TDTU\SEing\Final_SE_HK1\App\bin\Debug\MySqlConnector.xml
+D:\Workspace\TDTU\SEing\Final_SE_HK1\App\bin\Debug\System.Buffers.xml
+D:\Workspace\TDTU\SEing\Final_SE_HK1\App\bin\Debug\System.Diagnostics.DiagnosticSource.xml
+D:\Workspace\TDTU\SEing\Final_SE_HK1\App\bin\Debug\System.Memory.xml
+D:\Workspace\TDTU\SEing\Final_SE_HK1\App\bin\Debug\System.Numerics.Vectors.xml
+D:\Workspace\TDTU\SEing\Final_SE_HK1\App\bin\Debug\System.Runtime.CompilerServices.Unsafe.xml
+D:\Workspace\TDTU\SEing\Final_SE_HK1\App\bin\Debug\System.Threading.Tasks.Extensions.xml

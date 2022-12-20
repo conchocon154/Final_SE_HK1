@@ -1,4 +1,4 @@
-Link demo: https://drive.google.com/file/d/104kVB3eq8h-Q-Jajg5MDGvgmQ-BHVFZ3/view?usp=sharing
+NEW DETAIL DEMO VIDEO: https://drive.google.com/file/d/104kVB3eq8h-Q-Jajg5MDGvgmQ-BHVFZ3/view?usp=sharing
 
 HOW TO RUN USING VS 2022
 

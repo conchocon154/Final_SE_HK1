@@ -26,7 +26,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Shop Homepage - KShop</title>
+    <title>DangTan Homepage</title>
 
     <!-- Bootstrap core CSS -->
     <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -41,7 +41,7 @@
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
       <div class="container">
-        <a class="navbar-brand" href=""><img height="50"src="../logo/kshop.png"></img> EHM SHOP</a>
+        <a class="navbar-brand" href=""><img height="50"src="../logo/kshop.png"></img>DANGTAN SHOP</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -70,7 +70,7 @@
 
         <div class="col-lg-3">
 
-          <h1 class="my-4">EHM Shop</h1>
+          <h1 class="my-4">DangTan Shop</h1>
         </div>
         <!-- /.col-lg-3 -->
 
@@ -82,17 +82,17 @@
               <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
               <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
             </ol>
-            <div class="carousel-inner" role="listbox">
+            <!-- <div class="carousel-inner" role="listbox">
               <div class="carousel-item active text-center align-center">
-                <img class="d-inline img-fluid" src="../images/nokia-3-2-400x460.png" alt="First slide">
+                <img class="d-inline img-fluid" src="../images/" alt="First slide">
               </div>
               <div class="carousel-item text-center align-center">
-                <img class="d-inline img-fluid" src="../images/iphone-7-plus-128gb-de-400x460.png" alt="Second slide">
+                <img class="d-inline img-fluid" src="../images/" alt="Second slide">
               </div>
               <div class="carousel-item text-center align-center">
-                <img class="d-inline img-fluid" src="../images/samsung-galaxy-j3-2017-2-400x460.png" alt="Third slide">
+                <img class="d-inline img-fluid" src="../images/" alt="Third slide">
               </div>
-            </div>
+            </div> -->
             <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
               <span class="carousel-control-prev-icon" aria-hidden="true"></span>
               <span class="sr-only">Previous</span>
@@ -170,7 +170,7 @@
     <!-- Footer -->
     <footer class="py-5 bg-dark">
       <div class="container">
-        <p class="m-0 text-center text-white">Copyright &copy; Your Website 2017</p>
+        <p class="m-0 text-center text-white">Copyright &copy; Dang Tan 2022</p>
       </div>
       <!-- /.container -->
     </footer>

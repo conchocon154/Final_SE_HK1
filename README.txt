@@ -1,3 +1,5 @@
+Link demo: https://drive.google.com/file/d/104kVB3eq8h-Q-Jajg5MDGvgmQ-BHVFZ3/view?usp=sharing
+
 HOW TO RUN USING VS 2022
 
 1. Run SQL file using XAMPP - MySQL
@@ -29,5 +31,3 @@ Member:
 
 520K0108 - Lê Minh Đăng
 520K0342 - Cao Khánh Tân
-
-Link demo: https://drive.google.com/file/d/1FQLG5wH3j1fWWfSv0VyNb3TD9M89quPb/view?usp=sharing
